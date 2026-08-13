@@ -12,7 +12,7 @@ const context={
 };
 vm.createContext(context);
 const source=fs.readFileSync(new URL('../game.js',import.meta.url),'utf8')+`
-;globalThis.__gameTest={fresh,normalize,competitionAt,updateIpAfterRelease,studio,setState:x=>S=x,getState:()=>S};`;
+;globalThis.__gameTest={fresh,normalize,competitionAt,updateIpAfterRelease,studio,setState:x=>S=x,getState:()=>S,GOALS,ACHIEVEMENTS,makeStar,starTraits,pairKey,teamChemistry,poachCost,resolveBet,checkGoals,checkAchievements};`;
 vm.runInContext(source,context,{filename:'game.js'});
 const api=context.__gameTest;
 
@@ -55,5 +55,54 @@ api.updateIpAfterRelease(originalProject,work);
 assert.equal(state.ips.length,1);
 assert.equal(state.ips[0].entries,1);
 assert.equal(work.ipId,state.ips[0].id);
+
+// ── 新系统：明星 / 默契 / 目标成就 / 对赌 / 存档回填 ──
+assert.equal(base.goals.i,0);
+assert.ok(Array.isArray(base.achievements)&&Array.isArray(base.pending));
+assert.equal(typeof base.chemistry,'object');
+assert.equal(base.bet,null);
+
+// 旧存档（无新字段）能被 normalize 回填
+assert.equal(migrated.goals.i,0);
+assert.ok(Array.isArray(migrated.achievements));
+assert.ok(Array.isArray(migrated.pending));
+assert.equal(typeof migrated.chemistry,'object');
+assert.equal(typeof migrated.flags,'object');
+
+// 明星主创
+const star=api.makeStar(new Set());
+assert.ok(star.star&&star.aura>=8&&star.aura<=16);
+assert.ok(api.starTraits[star.starTrait]);
+
+// 搭档默契
+const s2=api.fresh();
+api.setState(s2);
+const [a,b]=s2.staff;
+s2.chemistry[api.pairKey(a.id,b.id)]=2;
+assert.equal(api.teamChemistry([a,b]),1);
+assert.equal(api.teamChemistry([a]),0);
+
+// 目标推进：发行首作后 checkGoals 应发钱并推进
+s2.works.push({name:'新片',score:7.0,net:0,releaseYear:2026});
+const before=s2.money;
+api.checkGoals();
+assert.equal(s2.goals.i,1);
+assert.equal(s2.money,before+500000);
+
+// 成就解锁
+s2.works.push({name:'神作',score:9.2,net:9000000,releaseYear:2027});
+api.checkAchievements();
+assert.ok(s2.achievements.includes('master')&&s2.achievements.includes('gold'));
+
+// 票房对赌结算
+s2.bet={rivalId:'r1',rivalName:'星河传媒',stake:500000,myScore:8.0,rivalScore:7.1};
+const cash=s2.money;
+api.resolveBet();
+assert.equal(s2.money,cash+1000000);
+assert.equal(s2.bet,null);
+assert.ok(s2.flags.betWon);
+
+// 挖角成本随实力上升
+assert.ok(api.poachCost({strength:82})>api.poachCost({strength:59}));
 
 console.log('game-core: all assertions passed');
