@@ -1,0 +1,15 @@
+{
+  "name": "开个影视公司",
+  "short_name": "开个影视公司",
+  "description": "从一间旧摄影棚开始，管理并行剧组、打造长线IP、谈发行抢档期。",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#ede5d8",
+  "theme_color": "#171311",
+  "icons": [
+    { "src": "icon/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

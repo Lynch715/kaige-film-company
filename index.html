@@ -6,6 +6,14 @@
   <meta name="theme-color" content="#171311">
   <meta name="description" content="开个影视公司：管理多项目制作线，经营IP与续作，谈判发行报价、争夺档期，并与真实竞争公司争夺五类观众。">
   <title>开个影视公司</title>
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="icon/icon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon/icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icon/icon-180.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="apple-mobile-web-app-title" content="开个影视公司">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <style>
     :root{--ink:#261f1b;--muted:#6b615a;--paper:#f7f2e9;--card:#fffdf8;--line:#dfd4c7;--red:#9f2f2a;--red2:#c34b3f;--gold:#c99845;--night:#171311;--green:#2f6650;--shadow:0 14px 38px #25170f1c}
     *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;color:var(--ink);background:#ede5d8}button,input,select{font:inherit}button{cursor:pointer;color:inherit}button:disabled{cursor:not-allowed;opacity:.45}
@@ -58,6 +66,20 @@
     .fold>summary:hover{background:#faf5ec}
     .fold .fold-body{padding:0 18px 16px}
     @media(max-width:760px){.fold>summary{padding:13px 15px;font-size:18px}.fold .fold-body{padding:0 15px 15px}}
+    .installbar{position:fixed;z-index:40;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));width:min(520px,calc(100% - 24px));
+      transform:translate(-50%,140%);opacity:0;transition:.28s cubic-bezier(.2,.8,.3,1);
+      display:flex;align-items:center;gap:13px;flex-wrap:wrap;padding:14px 16px;color:#f8ecda;
+      background:#1d1714;border:1px solid #6d5544;border-left:3px solid var(--gold);border-radius:8px;box-shadow:0 22px 60px #0009}
+    .installbar.show{transform:translate(-50%,0);opacity:1}
+    .installbar img{border-radius:9px;flex:none}
+    .installbar b{display:block;font-family:serif;font-size:17px;letter-spacing:.03em}
+    .installbar small{display:block;margin-top:3px;color:#c9bbae;font-size:12px;line-height:1.5}
+    .installbar .ib-act{display:flex;gap:8px;margin-left:auto}
+    .installbar .ib-act button{background:#33282210;border-color:#6d5544;color:#f0e3d2;box-shadow:none}
+    .installbar .ib-act button.primary{background:var(--red);border-color:#7d211e;color:#fff}
+    .installbar .ib-tip{flex:0 0 100%;margin:4px 0 0;padding-top:10px;border-top:1px dashed #5b483c;color:#ddcdbc;font-size:12.5px;line-height:1.7}
+    .installbar .ib-tip b{display:inline;font-family:inherit;font-size:inherit;color:var(--gold)}
+    @media(max-width:760px){.installbar{bottom:calc(74px + env(safe-area-inset-bottom))}.installbar .ib-act{margin-left:0;flex:1 1 100%}.installbar .ib-act button{flex:1}}
     .goal-list{margin-top:10px;display:grid;gap:2px}
     .goal-row{display:grid;grid-template-columns:20px auto 1fr;gap:8px;align-items:baseline;padding:6px 2px;border-bottom:1px dashed #e6dacc;font-size:13px;color:var(--muted)}
     .goal-row i{font-style:normal;color:#b9a892}.goal-row b{color:#7d7266;font-weight:700}
@@ -117,5 +139,6 @@
   <script src="src/events.js"></script>
   <script src="src/art.js"></script>
   <script src="src/game.js"></script>
+  <script src="src/install.js"></script>
 </body>
 </html>
