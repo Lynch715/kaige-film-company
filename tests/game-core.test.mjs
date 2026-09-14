@@ -11,9 +11,10 @@ const context={
   window:{addEventListener(){}},confirm:()=>true
 };
 vm.createContext(context);
-const source=fs.readFileSync(new URL('../game.js',import.meta.url),'utf8')+`
-;globalThis.__gameTest={fresh,normalize,competitionAt,updateIpAfterRelease,studio,setState:x=>S=x,getState:()=>S,GOALS,ACHIEVEMENTS,makeStar,starTraits,pairKey,teamChemistry,poachCost,resolveBet,checkGoals,checkAchievements};`;
-vm.runInContext(source,context,{filename:'game.js'});
+const files=['data.js','events.js','art.js','game.js'];
+const source=files.map(f=>fs.readFileSync(new URL('../src/'+f,import.meta.url),'utf8')).join('\n')+`
+;globalThis.__gameTest={fresh,normalize,competitionAt,updateIpAfterRelease,studio,setState:x=>S=x,getState:()=>S,GOALS,ACHIEVEMENTS,makeStar,starTraits,pairKey,teamChemistry,pickFace,ART,load,VERSION,poachCost,resolveBet,checkGoals,checkAchievements};`;
+vm.runInContext(source,context,{filename:'bundle.js'});
 const api=context.__gameTest;
 
 const base=api.fresh();
@@ -86,8 +87,13 @@ assert.equal(api.teamChemistry([a]),0);
 s2.works.push({name:'新片',score:7.0,net:0,releaseYear:2026});
 const before=s2.money;
 api.checkGoals();
-assert.equal(s2.goals.i,1);
+assert.ok(s2.goals.done.includes('debut'),'首作目标应达成');
 assert.equal(s2.money,before+500000);
+
+// 目标不再按顺序锁死：直接满足靠后的目标也应结算
+s2.studio=2;
+api.checkGoals();
+assert.ok(s2.goals.done.includes('base'),'越过前序目标也应能达成「自己的基地」');
 
 // 成就解锁
 s2.works.push({name:'神作',score:9.2,net:9000000,releaseYear:2027});
