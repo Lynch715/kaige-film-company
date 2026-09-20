@@ -460,7 +460,20 @@ function resolveBet(){const b=S.bet;if(!b||b.myScore==null||b.rivalScore==null)r
 function reserveOk(cost){if(S.projects.length||S.works.some(w=>w.active)||S.money-cost>=MIN_RESERVE)return true;toast('这笔投入会让公司无力启动下一部作品，请先留出周转资金。');return false}
 function buyFacility(id){const f=facilities.find(x=>x[0]===id);if(!f||S.facilities[id])return;if(S.money<f[3])return toast('资金不足。');if(!reserveOk(f[3]))return;S.money-=f[3];S.facilities[id]=true;addNews('设施升级',`${f[1]}建成投入使用。`);save();render()}
 function upgradeStudio(){const cost=studio().upgrade;if(cost==null)return;if(S.money<cost)return toast('资金不足。');if(!reserveOk(cost))return;S.money-=cost;S.studio++;chron(`公司搬进${studio().name}。`);addNews('公司搬迁',`公司升级至${studio().name}，开放 ${studio().slots} 条制作管线。`);save();render()}
-function toast(text){const t=$('toast');t.textContent=text;t.classList.add('show');clearTimeout(t._timer);t._timer=setTimeout(()=>t.classList.remove('show'),2200)}
+// showModal() 的弹窗在浏览器 top layer 里，z-index 再高也压不过去。
+// 有弹窗开着的时候，把 toast 挂进那个弹窗，它才看得见。
+function toastHost(){const ds=document.querySelectorAll('dialog[open]');return ds.length?ds[ds.length-1]:document.body}
+function toast(text){
+  const t=$('toast'),host=toastHost();
+  if(t.parentNode!==host)host.appendChild(t);
+  t.textContent=text;t.classList.add('show');
+  clearTimeout(t._timer);t._timer=setTimeout(()=>t.classList.remove('show'),2200);
+}
+// 弹窗关掉（× / ESC / 按钮都算）之后把 toast 收回 body，否则它跟着一起消失
+document.addEventListener('close',e=>{
+  const t=$('toast');
+  if(t&&e.target&&e.target.contains&&e.target.contains(t))document.body.appendChild(t);
+},true);
 
 $('continueBtn').disabled=!hasSave();
 window.addEventListener('beforeunload',save);

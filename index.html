@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
   <meta name="theme-color" content="#171311">
   <meta name="description" content="开个影视公司：管理多项目制作线，经营IP与续作，谈判发行报价、争夺档期，并与真实竞争公司争夺五类观众。">
   <title>开个影视公司</title>
@@ -16,7 +16,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <style>
     :root{--sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px);--ink:#261f1b;--muted:#6b615a;--paper:#f7f2e9;--card:#fffdf8;--line:#dfd4c7;--red:#9f2f2a;--red2:#c34b3f;--gold:#c99845;--night:#171311;--green:#2f6650;--shadow:0 14px 38px #25170f1c}
-    *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;color:var(--ink);background:#ede5d8}button,input,select{font:inherit}button{cursor:pointer;color:inherit}button:disabled{cursor:not-allowed;opacity:.45}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;color:var(--ink);background:#ede5d8}button,input,select{font:inherit;touch-action:manipulation}button{cursor:pointer;color:inherit}button:disabled{cursor:not-allowed;opacity:.45}
     :focus-visible{outline:2px solid var(--red2);outline-offset:2px}
     .hidden{display:none!important}.start{min-height:100vh;display:grid;place-items:center;padding:calc(24px + var(--sat)) 24px calc(24px + var(--sab));overflow:hidden;background:radial-gradient(circle at 75% 18%,#d7a34f80 0 4%,transparent 20%),radial-gradient(circle at 15% 85%,#9d342d70,transparent 25%),linear-gradient(145deg,#14100e,#34221d 55%,#15110f)}
     .start:before,.start:after{content:"";position:fixed;width:44vw;height:140vh;top:-20vh;background:linear-gradient(90deg,transparent,#ffffff0b,transparent);transform:rotate(18deg);pointer-events:none}.start:after{right:-20vw;transform:rotate(-22deg)}
@@ -66,6 +66,7 @@
     .fold>summary:hover{background:#faf5ec}
     .fold .fold-body{padding:0 18px 16px}
     @media(max-width:760px){.fold>summary{padding:13px 15px;font-size:18px}.fold .fold-body{padding:0 15px 15px}}
+    dialog>.toast{position:absolute;bottom:80px;max-width:calc(100% - 36px)}
     .installbar{position:fixed;z-index:40;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));width:min(520px,calc(100% - 24px));
       transform:translate(-50%,140%);opacity:0;transition:.28s cubic-bezier(.2,.8,.3,1);
       display:flex;align-items:center;gap:13px;flex-wrap:wrap;padding:14px 16px;color:#f8ecda;
@@ -90,7 +91,7 @@
     .orders button{min-width:0;padding:9px 4px;font-size:12px}
     .orders button.on{color:#fff;background:var(--red);border-color:#7d211e;box-shadow:0 2px 0 #681a17}
     .order-hint{margin:8px 0 0;font-size:12px}
-    @media(max-width:760px){.scene-band{height:104px}.scene-band b{font-size:18px}.portrait{width:40%}.orders{grid-template-columns:repeat(3,minmax(0,1fr))}.studio>.dashboard{display:contents}.set-card{order:1}.board{order:2}.quick{order:3}}
+    @media(max-width:760px){dialog>.toast{bottom:88px}.scene-band{height:104px}.scene-band b{font-size:18px}.portrait{width:40%}.orders{grid-template-columns:repeat(3,minmax(0,1fr))}.studio>.dashboard{display:contents}.set-card{order:1}.board{order:2}.quick{order:3}}
   </style>
 </head>
 <body>

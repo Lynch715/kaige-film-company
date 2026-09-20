@@ -7,7 +7,7 @@ const stubElement=()=>({disabled:false,classList:{add(){},remove(){},toggle(){}}
 const context={
   console,Math,JSON,Intl,setInterval,clearInterval,setTimeout,clearTimeout,
   localStorage:{getItem:k=>storage.get(k)??null,setItem:(k,v)=>storage.set(k,v),removeItem:k=>storage.delete(k)},
-  document:{getElementById:stubElement,querySelectorAll:()=>[],querySelector:()=>null},
+  document:{getElementById:stubElement,querySelectorAll:()=>[],querySelector:()=>null,addEventListener(){},body:{appendChild(){}},createElement:stubElement},
   window:{addEventListener(){}},confirm:()=>true
 };
 vm.createContext(context);
